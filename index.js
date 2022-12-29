@@ -45,13 +45,6 @@ app.get('/movies/read', (req, res) => {
   res.json({status: 200, data: movies});
 });
 
-app.put('/movies/update', (req, res) => {
-  // TODO: Add code to handle movie update
-});
-
-app.delete('/movies/delete', (req, res) => {
-  // TODO: Add code to handle movie delete
-});
 
 app.get('/movies/read/by-date', (req, res) => {
   const moviesByDate = movies.sort((a, b) => a.year - b.year);
@@ -106,6 +99,20 @@ app.get('/movies/delete/:id', (req, res) => {
   const movieIndex = movies.findIndex(movie => movie.id == id);
   if (movieIndex !== -1) {
     movies.splice(movieIndex, 1);
+    res.json({status: 200, data: movies});
+  } else {
+    res.status(404).json({status: 404, error: true, message: `the movie ${id} does not exist`});
+  }
+});
+
+
+app.get('/movies/update/:id', (req, res) => {
+  const id = req.params.id;
+  const movie = movies.find(movie => movie.id == id);
+  if (movie) {
+    const { title, rating } = req.query;
+    if (title) movie.title = title;
+    if (rating) movie.rating = rating;
     res.json({status: 200, data: movies});
   } else {
     res.status(404).json({status: 404, error: true, message: `the movie ${id} does not exist`});
