@@ -1,3 +1,5 @@
+const MongoClient = require('mongodb').MongoClient;
+const bodyParser  = require('body-parser');
 const express = require('express');
 const app = express();
 
@@ -79,7 +81,7 @@ app.get('/movies/read/id/:ID', (req, res) => {
   }
 });
 
-app.get('/movies/add', (req, res) => {
+app.post('/movies/add', (req, res) => {
   const title = req.query.title;
   const year = req.query.year;
   const rating = req.query.rating || 4; // default rating if not provided
@@ -94,7 +96,7 @@ app.get('/movies/add', (req, res) => {
   res.json({status: 200, data: movies});
 });
 
-app.get('/movies/delete/:id', (req, res) => {
+app.delete('/movies/delete/:id', (req, res) => {
   const id = req.params.id;
   const movieIndex = movies.findIndex(movie => movie.id == id);
   if (movieIndex !== -1) {
@@ -106,7 +108,7 @@ app.get('/movies/delete/:id', (req, res) => {
 });
 
 
-app.get('/movies/update/:id', (req, res) => {
+app.put('/movies/update/:id', (req, res) => {
   const id = req.params.id;
   const movie = movies.find(movie => movie.id == id);
   if (movie) {
