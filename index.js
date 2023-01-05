@@ -39,9 +39,6 @@ app.get('/search', (req, res) => {
   }
 });
 
-app.post('/movies/create', (req, res) => {
-  // TODO: Add code to handle movie creation
-});
 
 app.get('/movies/read', (req, res) => {
   res.json({status: 200, data: movies});
